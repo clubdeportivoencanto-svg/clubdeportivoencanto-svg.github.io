@@ -1,350 +1,178 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Canchas Encanto Campestre</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7f4;
-      color: #222;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Canchas Encanto Campestre — Reserva en segundos</title>
+<meta name="description" content="Complejo deportivo campestre con canchas de fútbol sintético y voleibol playa. Reserva online, disponibilidad inmediata, horario de 6 AM a 11 PM." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#1f5132;          /* verde profundo */
+    --primary-foreground:#ffffff;
+    --accent:#f5c518;           /* amarillo hora valle */
+    --accent-foreground:#1a1a1a;
+    --bg:#fbfaf6;
+    --fg:#1a1a1a;
+    --muted:#6b7280;
+    --card:#ffffff;
+    --border:#e6e6e0;
+    --success:#16a34a;
+    --destructive:#dc2626;
+    --shadow:0 12px 32px -12px rgba(31,81,50,.35);
+    --gradient-hero:linear-gradient(135deg,#1f5132 0%,#2d7a48 100%);
+    --gradient-accent:linear-gradient(135deg,#f5c518 0%,#f59e0b 100%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.5}
+  h1,h2,h3,.display{font-family:'Poppins',sans-serif;font-weight:800;letter-spacing:-.02em}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .container{max-width:1200px;margin:0 auto;padding:0 1rem}
 
-    header {
-      background: #064d2c;
-      color: white;
-      padding: 35px;
-      text-align: center;
-    }
+  /* NAVBAR */
+  .nav{position:sticky;top:0;z-index:40;background:var(--primary);color:#fff;box-shadow:var(--shadow)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1rem;max-width:1200px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:.5rem;font-family:'Poppins';font-weight:800;font-size:1.05rem}
+  .brand .dot{width:10px;height:10px;border-radius:999px;background:var(--accent)}
+  .nav-links{display:none;gap:.25rem}
+  .nav-links a{padding:.5rem .85rem;border-radius:.5rem;font-size:.9rem;font-weight:500}
+  .nav-links a:hover{background:rgba(255,255,255,.1)}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.1rem;border-radius:.6rem;font-weight:600;font-size:.95rem;cursor:pointer;border:none;transition:transform .15s,box-shadow .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-accent{background:var(--accent);color:var(--accent-foreground)}
+  .btn-primary{background:var(--primary);color:#fff}
+  .btn-outline{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.4)}
+  @media(min-width:900px){.nav-links{display:flex}}
 
-    header h1 {
-      margin: 0;
-      font-size: 42px;
-    }
+  /* HERO */
+  .hero{position:relative;min-height:85vh;display:flex;align-items:center;overflow:hidden;isolation:isolate}
+  .hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,rgba(31,81,50,.6) 50%,rgba(31,81,50,.92) 100%);z-index:-1}
+  .hero-content{padding:5rem 1rem;color:#fff;max-width:1200px;margin:0 auto;width:100%}
+  .chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--accent);color:var(--accent-foreground);padding:.4rem 1rem;border-radius:999px;font-size:.85rem;font-weight:600}
+  .hero h1{font-size:clamp(2.5rem,6vw,4.5rem);margin-top:1.5rem;max-width:46rem;line-height:1.05}
+  .hero h1 span{color:var(--accent)}
+  .hero p{margin-top:1.5rem;max-width:34rem;font-size:1.1rem;color:rgba(255,255,255,.9)}
+  .hero-ctas{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.75rem}
 
-    header p {
-      font-size: 20px;
-      color: #ffe600;
-    }
+  /* FEATURES */
+  .section{padding:4rem 0}
+  .grid-3{display:grid;gap:1.5rem;grid-template-columns:1fr}
+  @media(min-width:768px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .card .icon{width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:rgba(31,81,50,.1);color:var(--primary);border-radius:.6rem;font-size:1.3rem}
+  .card h3{margin-top:1rem;font-size:1.25rem}
+  .card p{margin-top:.5rem;color:var(--muted);font-size:.92rem}
 
-    .container {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 20px;
-    }
+  /* INSTALACIONES */
+  .section h2{font-size:clamp(2rem,4vw,2.5rem);color:var(--primary)}
+  .section .lead{margin-top:.5rem;color:var(--muted)}
+  .grid-2{display:grid;gap:1.5rem;grid-template-columns:1fr;margin-top:2rem}
+  @media(min-width:768px){.grid-2{grid-template-columns:1fr 1fr}}
+  .tile{position:relative;overflow:hidden;border-radius:1.25rem;box-shadow:var(--shadow)}
+  .tile img{height:20rem;width:100%;object-fit:cover;transition:transform .5s}
+  .tile:hover img{transform:scale(1.05)}
+  .tile::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(31,81,50,.95) 0%,rgba(31,81,50,.3) 50%,transparent 100%)}
+  .tile-text{position:absolute;bottom:0;left:0;padding:1.5rem;color:#fff;z-index:2}
+  .tile-text h3{font-family:'Poppins';font-size:1.5rem;font-weight:800}
+  .tile-text p{font-size:.9rem;color:rgba(255,255,255,.85);margin-top:.25rem}
 
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 25px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-      margin-bottom: 25px;
-    }
+  /* CTA */
+  .cta{max-width:900px;margin:0 auto;padding:3rem 1rem 5rem}
+  .cta-box{background:var(--gradient-accent);border-radius:1.5rem;padding:3rem 2rem;text-align:center;box-shadow:var(--shadow);color:var(--accent-foreground)}
+  .cta-box h2{font-size:clamp(1.75rem,3.5vw,2.25rem)}
+  .cta-box p{margin-top:.5rem;color:rgba(26,26,26,.75)}
+  .cta-box .btn{margin-top:1.5rem}
 
-    h2 {
-      color: #064d2c;
-    }
+  /* FOOTER */
+  footer{background:var(--primary);color:#fff;padding:2.5rem 1rem;text-align:center;margin-top:4rem}
+  footer .name{font-family:'Poppins';font-weight:800;font-size:1.1rem}
+  footer .tag{opacity:.75;margin-top:.25rem}
+  footer .legal{opacity:.55;font-size:.85rem;margin-top:1rem}
 
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 15px;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 13px;
-      margin-top: 6px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 15px;
-      background: #ffdd00;
-      border: none;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #e6c900;
-    }
-
-    .resumen {
-      background: #eef8f1;
-      border-left: 6px solid #064d2c;
-      padding: 20px;
-      border-radius: 12px;
-      margin-top: 20px;
-    }
-
-    .precio {
-      font-size: 28px;
-      color: #064d2c;
-      font-weight: bold;
-    }
-
-    .tag {
-      display: inline-block;
-      background: #ffdd00;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-
-    th {
-      background: #064d2c;
-      color: white;
-    }
-
-    th, td {
-      padding: 12px;
-      border: 1px solid #ddd;
-      text-align: center;
-    }
-
-    .whatsapp {
-      background: #25d366;
-      color: white;
-    }
-  </style>
+  /* WhatsApp button */
+  .wa{position:fixed;right:1.25rem;bottom:1.25rem;width:56px;height:56px;border-radius:999px;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,.4);z-index:50}
+  .wa svg{width:28px;height:28px}
+</style>
 </head>
 <body>
 
-<header>
-  <h1>Canchas Encanto Campestre</h1>
-  <p>Reserva tu espacio deportivo en segundos</p>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#"><span class="dot"></span> Encanto Campestre</a>
+    <nav class="nav-links">
+      <a href="#">Inicio</a>
+      <a href="#reservar">Reservar Cancha</a>
+      <a href="#">Mis Reservas</a>
+      <a href="#promociones">Promociones</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a href="#" class="btn btn-accent">Iniciar Sesión</a>
+  </div>
 </header>
 
-<div class="container">
-
-  <div class="card">
-    <h2>Reservar cancha</h2>
-
-    <label>Nombre completo</label>
-    <input type="text" id="nombre" placeholder="Nombre del cliente">
-
-    <label>WhatsApp</label>
-    <input type="text" id="whatsapp" placeholder="Ej: 3001234567">
-
-    <label>Cancha</label>
-    <select id="cancha" onchange="mostrarPersonas()">
-      <option value="sintetica1">Cancha Sintética No. 1</option>
-      <option value="sintetica2">Cancha Sintética No. 2</option>
-      <option value="voley1">Voley Playa No. 1</option>
-      <option value="voley2">Voley Playa No. 2</option>
-    </select>
-
-    <label>Fecha</label>
-    <input type="date" id="fecha">
-
-    <label>Hora de inicio</label>
-    <select id="hora">
-      <option value="6">6:00 a.m.</option>
-      <option value="7">7:00 a.m.</option>
-      <option value="8">8:00 a.m.</option>
-      <option value="9">9:00 a.m.</option>
-      <option value="10">10:00 a.m.</option>
-      <option value="11">11:00 a.m.</option>
-      <option value="12">12:00 p.m.</option>
-      <option value="13">1:00 p.m.</option>
-      <option value="14">2:00 p.m.</option>
-      <option value="15">3:00 p.m.</option>
-      <option value="16">4:00 p.m.</option>
-      <option value="17">5:00 p.m.</option>
-      <option value="18">6:00 p.m.</option>
-      <option value="19">7:00 p.m.</option>
-      <option value="20">8:00 p.m.</option>
-      <option value="21">9:00 p.m.</option>
-      <option value="22">10:00 p.m.</option>
-    </select>
-
-    <label>Cantidad de horas</label>
-    <input type="number" id="horas" value="1" min="1">
-
-    <div id="personasBox" style="display:none;">
-      <label>Cantidad de personas</label>
-      <input type="number" id="personas" value="6" min="1">
+<section class="hero">
+  <img class="bg" src="assets/hero-banner.jpg" alt="Complejo deportivo Encanto Campestre" />
+  <div class="hero-content">
+    <span class="chip">✨ Complejo campestre</span>
+    <h1>Reserva tu espacio<br/><span>deportivo</span> en segundos.</h1>
+    <p>Canchas de fútbol sintético y voleibol playa en un entorno natural único. Disponibilidad en tiempo real, todos los días de 6:00 AM a 11:00 PM.</p>
+    <div class="hero-ctas">
+      <a href="#reservar" class="btn btn-accent">📅 Reservar Cancha</a>
+      <a href="#promociones" class="btn btn-outline">Ver Promociones</a>
     </div>
-
-    <button onclick="calcularReserva()">Calcular reserva</button>
-
-    <div id="resultado"></div>
-
-    <button class="whatsapp" onclick="enviarWhatsApp()">Confirmar por WhatsApp</button>
   </div>
+</section>
 
-  <div class="card">
-    <h2>Tarifas</h2>
-    <table>
-      <tr>
-        <th>Cancha</th>
-        <th>Día</th>
-        <th>Noche</th>
-        <th>Hora Valle</th>
-      </tr>
-      <tr>
-        <td>Sintética No. 1</td>
-        <td>$60.000</td>
-        <td>$80.000</td>
-        <td>$40.000</td>
-      </tr>
-      <tr>
-        <td>Sintética No. 2</td>
-        <td>$40.000</td>
-        <td>$50.000</td>
-        <td>$20.000</td>
-      </tr>
-      <tr>
-        <td>Voley Playa</td>
-        <td>$30.000 / $40.000</td>
-        <td>$40.000 / $50.000</td>
-        <td>$20.000</td>
-      </tr>
-    </table>
+<section class="section container">
+  <div class="grid-3">
+    <div class="card"><div class="icon">⏰</div><h3>Horario amplio</h3><p>Todos los días de 06:00 AM a 11:00 PM.</p></div>
+    <div class="card"><div class="icon">📍</div><h3>4 canchas profesionales</h3><p>2 sintéticas y 2 de voleibol playa.</p></div>
+    <div class="card"><div class="icon">✨</div><h3>Hora Valle</h3><p>Tarifas especiales L-V de 11 AM a 3 PM.</p></div>
   </div>
+</section>
 
-</div>
-
-<script>
-  let resumenTexto = "";
-
-  function mostrarPersonas() {
-    const cancha = document.getElementById("cancha").value;
-    const personasBox = document.getElementById("personasBox");
-
-    if (cancha === "voley1" || cancha === "voley2") {
-      personasBox.style.display = "block";
-    } else {
-      personasBox.style.display = "none";
-    }
-  }
-
-  function calcularReserva() {
-    const nombre = document.getElementById("nombre").value;
-    const whatsapp = document.getElementById("whatsapp").value;
-    const cancha = document.getElementById("cancha").value;
-    const fecha = document.getElementById("fecha").value;
-    const hora = parseInt(document.getElementById("hora").value);
-    const horas = parseInt(document.getElementById("horas").value);
-    const personas = parseInt(document.getElementById("personas").value || 0);
-
-    if (!nombre || !whatsapp || !fecha) {
-      alert("Por favor completa nombre, WhatsApp y fecha.");
-      return;
-    }
-
-    const fechaObj = new Date(fecha + "T00:00:00");
-    const diaSemana = fechaObj.getDay();
-    const esLunesViernes = diaSemana >= 1 && diaSemana <= 5;
-    const esHoraValle = esLunesViernes && hora >= 11 && hora < 15;
-
-    let valorHora = 0;
-    let tarifa = "";
-
-    if (cancha === "sintetica1") {
-      if (esHoraValle) {
-        valorHora = 40000;
-        tarifa = "Hora Valle";
-      } else if (hora < 18) {
-        valorHora = 60000;
-        tarifa = "Diurna";
-      } else {
-        valorHora = 80000;
-        tarifa = "Nocturna";
-      }
-    }
-
-    if (cancha === "sintetica2") {
-      if (esHoraValle) {
-        valorHora = 20000;
-        tarifa = "Hora Valle";
-      } else if (hora < 18) {
-        valorHora = 40000;
-        tarifa = "Diurna";
-      } else {
-        valorHora = 50000;
-        tarifa = "Nocturna";
-      }
-    }
-
-    if (cancha === "voley1" || cancha === "voley2") {
-      if (esHoraValle) {
-        valorHora = 20000;
-        tarifa = "Hora Valle";
-      } else if (hora < 18) {
-        valorHora = personas <= 6 ? 30000 : 40000;
-        tarifa = personas <= 6 ? "Diurna hasta 6 personas" : "Diurna más de 6 personas";
-      } else {
-        valorHora = personas <= 6 ? 40000 : 50000;
-        tarifa = personas <= 6 ? "Nocturna hasta 6 personas" : "Nocturna más de 6 personas";
-      }
-    }
-
-    const total = valorHora * horas;
-    const horaFinal = hora + horas;
-
-    const nombreCancha = {
-      sintetica1: "Cancha Sintética No. 1",
-      sintetica2: "Cancha Sintética No. 2",
-      voley1: "Voley Playa No. 1",
-      voley2: "Voley Playa No. 2"
-    }[cancha];
-
-    resumenTexto =
-      `Hola ${nombre}, tu reserva en Canchas Encanto Campestre ha sido registrada.%0A%0A` +
-      `Cancha: ${nombreCancha}%0A` +
-      `Fecha: ${fecha}%0A` +
-      `Hora: ${hora}:00%0A` +
-      `Horas reservadas: ${horas}%0A` +
-      `Tarifa: ${tarifa}%0A` +
-      `Valor por hora: $${valorHora.toLocaleString("es-CO")}%0A` +
-      `Total a pagar: $${total.toLocaleString("es-CO")}`;
-
-    document.getElementById("resultado").innerHTML = `
-      <div class="resumen">
-        <h3>Resumen de reserva</h3>
-        <p><strong>Cliente:</strong> ${nombre}</p>
-        <p><strong>WhatsApp:</strong> ${whatsapp}</p>
-        <p><strong>Cancha:</strong> ${nombreCancha}</p>
-        <p><strong>Fecha:</strong> ${fecha}</p>
-        <p><strong>Hora inicio:</strong> ${hora}:00</p>
-        <p><strong>Hora final:</strong> ${horaFinal}:00</p>
-        <p><strong>Horas:</strong> ${horas}</p>
-        ${(cancha === "voley1" || cancha === "voley2") ? `<p><strong>Personas:</strong> ${personas}</p>` : ""}
-        <p><strong>Tarifa aplicada:</strong> <span class="tag">${tarifa}</span></p>
-        <p><strong>Valor por hora:</strong> $${valorHora.toLocaleString("es-CO")}</p>
-        <p class="precio">Total: $${total.toLocaleString("es-CO")}</p>
+<section class="section container" id="reservar">
+  <h2>Nuestras instalaciones</h2>
+  <p class="lead">Cuatro canchas listas para tu próximo partido.</p>
+  <div class="grid-2">
+    <div class="tile">
+      <img src="assets/cancha-sintetica.jpg" alt="Cancha de fútbol sintético" />
+      <div class="tile-text">
+        <h3>Canchas Sintéticas</h3>
+        <p>Cancha N°1 (6 personas) y N°2 (4 personas) — grama profesional.</p>
       </div>
-    `;
-  }
+    </div>
+    <div class="tile">
+      <img src="assets/voley-playa.jpg" alt="Cancha de vóley playa" />
+      <div class="tile-text">
+        <h3>Voley Playa</h3>
+        <p>Cancha N°1 y N°2 — arena fina entre palmeras.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  function enviarWhatsApp() {
-    const whatsapp = document.getElementById("whatsapp").value;
+<section class="cta" id="promociones">
+  <div class="cta-box">
+    <h2>¿Listo para jugar?</h2>
+    <p>Reserva ahora y asegura tu horario favorito.</p>
+    <a href="#" class="btn btn-primary">Reservar ahora</a>
+  </div>
+</section>
 
-    if (!resumenTexto) {
-      alert("Primero calcula la reserva.");
-      return;
-    }
+<footer id="contacto">
+  <p class="name">Canchas Encanto Campestre</p>
+  <p class="tag">Reserva tu espacio deportivo en segundos.</p>
+  <p class="legal">© 2026 Encanto Campestre. Todos los derechos reservados.</p>
+</footer>
 
-    const url = `https://wa.me/57${whatsapp}?text=${resumenTexto}`;
-    window.open(url, "_blank");
-  }
-</script>
+<a class="wa" href="https://wa.me/" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 0 5.4 0 12c0 2.1.5 4.1 1.6 5.9L0 24l6.3-1.6A12 12 0 0 0 12 24c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.5zM12 22a10 10 0 0 1-5.1-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A10 10 0 1 1 22 12c0 5.5-4.5 10-10 10zm5.5-7.5c-.3-.2-1.8-.9-2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0a8 8 0 0 1-2.4-1.5 9 9 0 0 1-1.6-2c-.2-.3 0-.5.1-.7l.5-.5.3-.5c.1-.2 0-.4 0-.5l-.7-1.7c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5 0-.7.3a3 3 0 0 0-1 2.3c0 1.3 1 2.6 1.1 2.8s2 3 4.7 4.2c.6.3 1.1.5 1.5.6.7.2 1.3.2 1.7.1.5-.1 1.6-.7 1.8-1.3.2-.7.2-1.2.2-1.4l-.6-.3z"/></svg>
+</a>
 
 </body>
 </html>
